@@ -22,8 +22,8 @@ const scrambleDogs = (dogs) => {
   const dogArray = new Array(dogs.length * 2).fill(null);
   for (let each of dogs) {
     // have to call it twice to have pairs!
-    randomDog(dogArray, each, "-1");
-    randomDog(dogArray, each, "-2");
+    randomDog(dogArray, each);
+    randomDog(dogArray, each);
   }
   return dogArray;
 };
@@ -36,11 +36,11 @@ const getBreed = (dogInfo) => {
   return dogInfo.breeds[0].name;
 };
 
-function randomDog(dogArray, dog, id) {
+function randomDog(dogArray, dog) {
   while (true) {
     let randomIndex = random(dogArray.length);
     if (dogArray[randomIndex] === null) {
-      dogArray[randomIndex] = { ...dog, id: dog.id + id };
+      dogArray[randomIndex] = { ...dog, order: randomIndex };
       break;
     }
   }

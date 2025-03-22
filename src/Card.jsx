@@ -1,13 +1,32 @@
 // import react, { useState } from "react";
 import { getBreed } from "./fetchImages";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PawSVG } from "./pawSVG";
 
-export default function Card({ imgData }) {
+export default function Card({ imgData, flip1, flip2, setFlip1, setFlip2 }) {
   const [isActive, setIsActive] = useState(false);
 
+  useEffect(() => {
+    if (isActive && flip1 && flip2) {
+      if ((flip1 === imgData.id || flip2 === imgData.id) && flip1 !== flip2) {
+        setTimeout(() => {
+          setIsActive(false);
+        }, 2000);
+      }
+      setFlip1("");
+      setFlip2("");
+    }
+  }, [flip1, flip2, isActive, setFlip1, setFlip2, imgData.id]);
+
   const handleClick = () => {
-    setIsActive(!isActive);
+    if (!flip1) {
+      setFlip1(imgData.id);
+      setIsActive(true);
+    }
+    if (flip1 && !flip2) {
+      setFlip2(imgData.id);
+      setIsActive(true);
+    }
   };
 
   return (
@@ -22,7 +41,6 @@ export default function Card({ imgData }) {
         <div className="flip-card-front">
           <h1>Puppy Memory</h1>
           <PawSVG />
-          {/* <img src="./assets/dog-paw-svgrepo-com.svg" alt="" /> */}
         </div>
       </div>
     </div>
