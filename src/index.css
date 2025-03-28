@@ -137,3 +137,16 @@ button:focus-visible {
   height: calc(100% - 40px);
   margin: 20px;
 }
+
+.scoreBoard {
+  font-size: 24px;
+  display: flex;
+  width: 500px;
+  margin: 20px;
+  justify-content: space-around;
+  flex: 1 1 50%;
+}
+
+.currentPlayer {
+  color: red;
+}

@@ -1,5 +1,7 @@
+import AiPlayer from "./AiPlayer";
+
 const imageUrl =
-  "https://api.thedogapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=9";
+  "https://api.thedogapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=";
 const headers = new Headers({
   "Content-Type": "application/json",
   "x-api-key":
@@ -12,15 +14,18 @@ var requestOptions = {
   redirect: "follow",
 };
 
-const fetchImages = async (setter) => {
-  const res = await fetch(imageUrl, requestOptions);
+const fetchImages = async (setImg, setWeightMap, size) => {
+  const res = await fetch(imageUrl + size, requestOptions);
   const resData = await res.json();
-  setter(scrambleDogs(resData));
+  const imgData = scrambleDogs(resData);
+  setImg(imgData);
+  setWeightMap(AiPlayer.initAI(imgData));
 };
 
 const scrambleDogs = (dogs) => {
   const dogArray = new Array(dogs.length * 2).fill(null);
   for (let each of dogs) {
+    each.isFlipped = false;
     // have to call it twice to have pairs!
     randomDog(dogArray, each);
     randomDog(dogArray, each);
@@ -28,7 +33,7 @@ const scrambleDogs = (dogs) => {
   return dogArray;
 };
 
-const random = (max) => {
+export const random = (max) => {
   return Math.floor(Math.random() * max);
 };
 
