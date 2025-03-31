@@ -1,7 +1,6 @@
 import { getBreed } from "./fetchImages";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { PawSVG } from "./pawSVG";
-import AiPlayer from "./AiPlayer";
 
 export default function Card({
   imgData,
@@ -11,63 +10,55 @@ export default function Card({
   setGameState,
   isActive,
   setIsActive,
-  aiTurn,
+  incrementWeight,
 }) {
-  const resetFlip = useCallback(() => {
-    if (
-      (gameState.flip1 === imgData.id || gameState.flip2 === imgData.id) &&
-      gameState.flip1 !== gameState.flip2
-    ) {
-      nextTurn();
-    } else {
-      setScoreData({
-        ...scoreData,
-        [scoreData.currentPlayer ? "player2" : "player1"]:
-          scoreData[scoreData.currentPlayer ? "player2" : "player1"] + 1,
-      });
-    }
-    setGameState({ ...gameState, flip1: "", flip2: "" });
-
-    function nextTurn() {
-      nextPlayer(setScoreData);
-      console.log("Next Player", scoreData.currentPlayer);
-      if (gameState.playAI && scoreData.currentPlayer === 1) {
-        aiTurn();
-        nextPlayer(setScoreData);
-      }
-      setTimeout(() => {
-        // console.log("Not a match.  Resetting.", isActive);
-        setIsActive(false);
-      }, 2000);
-    }
-  }, [
-    imgData.id,
-    gameState,
-    setGameState,
-    scoreData,
-    setScoreData,
-    setIsActive,
-    aiTurn,
-  ]);
+  function incrementScore() {
+    setScoreData({
+      ...scoreData,
+      [scoreData.isPlayer1Turn ? "player1" : "player2"]:
+        scoreData[scoreData.isPlayer1Turn ? "player1" : "player2"] + 1,
+    });
+  }
 
   useEffect(() => {
+    //confirm that the turn has been taken
     if (isActive && gameState.flip1 && gameState.flip2) {
-      resetFlip();
+      if (
+        gameState.flip1 === gameState.flip2 &&
+        gameState.flip1 === imgData.id
+      ) {
+        incrementScore();
+        setGameState({ ...gameState, flip1: "", flip2: "" });
+      } else if (
+        gameState.flip1 === imgData.id ||
+        gameState.flip2 === imgData.id
+      ) {
+        nextPlayer(setScoreData, !scoreData.isPlayer1Turn);
+        setTimeout(() => {
+          setIsActive(false);
+          setGameState({ ...gameState, flip1: "", flip2: "" });
+          console.log(
+            "could this be getting called twice?",
+            scoreData.isPlayer1Turn
+          );
+        }, 900);
+      }
     }
-  }, [gameState, isActive, resetFlip, imgData]);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameState.flip2]);
 
   const handleClick = () => {
-    // if (!gameState.awaitUpdate) {
     // this is what a player action looks like
     if (!gameState.flip1) {
       setFlip(imgData.id, "flip1");
+      incrementWeight(imgData.id);
       setIsActive(true);
     }
     if (gameState.flip1 && !gameState.flip2) {
       setFlip(imgData.id, "flip2");
+      incrementWeight(imgData.id);
       setIsActive(true);
     }
-    // }
   };
 
   const setFlip = (id, flipName) => {
@@ -91,11 +82,12 @@ export default function Card({
     </div>
   );
 }
-function nextPlayer(setScoreData) {
+
+function nextPlayer(setScoreData, newIsPlayer1Turn) {
   setScoreData((scoreData) => {
     return {
       ...scoreData,
-      currentPlayer: scoreData.currentPlayer === 0 ? 1 : 0,
+      isPlayer1Turn: newIsPlayer1Turn,
     };
   });
 }
