@@ -37,10 +37,6 @@ export default function Card({
         setTimeout(() => {
           setIsActive(false);
           setGameState({ ...gameState, flip1: "", flip2: "" });
-          console.log(
-            "could this be getting called twice?",
-            scoreData.isPlayer1Turn
-          );
         }, 900);
       }
     }
