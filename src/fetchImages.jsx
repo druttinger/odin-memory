@@ -14,11 +14,17 @@ var requestOptions = {
   redirect: "follow",
 };
 
-const fetchImages = async (setImg, setWeightMap, size) => {
+const fetchImages = async (setImg, size) => {
+  console.log("this is getting called");
   const res = await fetch(imageUrl + size, requestOptions);
   const resData = await res.json();
+  console.log("resData", resData);
+  setImg(resData);
+};
+
+const mapCards = (resData, setCardMap, setWeightMap) => {
   const imgData = scrambleDogs(resData);
-  setImg(imgData);
+  setCardMap(imgData);
   setWeightMap(AiPlayer.initAI(imgData));
 };
 
@@ -33,7 +39,7 @@ const scrambleDogs = (dogs) => {
   return dogArray;
 };
 
-export const random = (max) => {
+const random = (max) => {
   return Math.floor(Math.random() * max);
 };
 
@@ -51,4 +57,4 @@ function randomDog(dogArray, dog) {
   }
 }
 
-export { fetchImages, getBreed };
+export { fetchImages, getBreed, mapCards, random };

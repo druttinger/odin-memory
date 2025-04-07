@@ -128,6 +128,15 @@ button:focus-visible {
   border-radius: 25px;
 }
 
+/* .gameBox {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  gap: 1rem;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  margin: 20px;
+} */
 .gameBox {
   display: flex;
   flex-wrap: wrap;
@@ -149,4 +158,53 @@ button:focus-visible {
 
 .currentPlayer {
   color: red;
+}
+
+/* HIDE RADIO */
+[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type="radio"] + img {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type="radio"]:checked + img {
+  outline: 2px solid #f00;
+  border-radius: 10px;
+}
+
+[type="radio"]:not(:checked):hover + img {
+  outline: 2px solid rgb(246, 148, 148);
+  border-radius: 10px;
+}
+
+.modal {
+  position: absolute;
+  z-index: 10;
+  top: 25%;
+  left: 0%;
+  width: 50%;
+  height: 50%;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  cursor: pointer;
 }

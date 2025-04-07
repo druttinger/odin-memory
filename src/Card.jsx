@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { PawSVG } from "./pawSVG";
 
 export default function Card({
-  imgData,
+  cardData,
   scoreData,
   setScoreData,
   gameState,
@@ -25,13 +25,13 @@ export default function Card({
     if (isActive && gameState.flip1 && gameState.flip2) {
       if (
         gameState.flip1 === gameState.flip2 &&
-        gameState.flip1 === imgData.id
+        gameState.flip1 === cardData.id
       ) {
         incrementScore();
         setGameState({ ...gameState, flip1: "", flip2: "" });
       } else if (
-        gameState.flip1 === imgData.id ||
-        gameState.flip2 === imgData.id
+        gameState.flip1 === cardData.id ||
+        gameState.flip2 === cardData.id
       ) {
         nextPlayer(setScoreData, !scoreData.isPlayer1Turn);
         setTimeout(() => {
@@ -46,13 +46,13 @@ export default function Card({
   const handleClick = () => {
     // this is what a player action looks like
     if (!gameState.flip1) {
-      setFlip(imgData.id, "flip1");
-      incrementWeight(imgData.id);
+      setFlip(cardData.id, "flip1");
+      incrementWeight(cardData.id);
       setIsActive(true);
     }
     if (gameState.flip1 && !gameState.flip2) {
-      setFlip(imgData.id, "flip2");
-      incrementWeight(imgData.id);
+      setFlip(cardData.id, "flip2");
+      incrementWeight(cardData.id);
       setIsActive(true);
     }
   };
@@ -68,7 +68,7 @@ export default function Card({
     >
       <div className="flip-card-inner">
         <div className="flip-card-back">
-          <img src={imgData.url} alt={getBreed(imgData)} />
+          <img src={cardData.url} alt={getBreed(cardData)} />
         </div>
         <div className="flip-card-front">
           <h1>Puppy Memory</h1>
