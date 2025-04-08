@@ -18,7 +18,7 @@ export function ScoreBoard(
       </span>
       <span>{scoreData.isPlayer1Turn ? " < " : " > "}</span>
       <span className={!scoreData.isPlayer1Turn ? "currentPlayer" : ""}>
-        Player 2: {scoreData.player2}
+        {(gameState.playAI ? "Computer: " : "Player 2: ") + scoreData.player2}
       </span>
       {checkGameOver() ? (
         <span>

@@ -1,5 +1,5 @@
 import { getBreed } from "./fetchImages";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PawSVG } from "./pawSVG";
 
 export default function Card({
@@ -12,6 +12,8 @@ export default function Card({
   setIsActive,
   incrementWeight,
 }) {
+  const [flippedBy, setFlippedBy] = useState("");
+
   function incrementScore() {
     setScoreData({
       ...scoreData,
@@ -25,13 +27,16 @@ export default function Card({
     if (isActive && gameState.flip1 && gameState.flip2) {
       if (
         gameState.flip1 === gameState.flip2 &&
-        gameState.flip1 === cardData.id
+        gameState.flip1 === cardData.id &&
+        !flippedBy
       ) {
+        setFlippedBy(scoreData.isPlayer1Turn ? "player1flip" : "player2flip");
         incrementScore();
         setGameState({ ...gameState, flip1: "", flip2: "" });
       } else if (
-        gameState.flip1 === cardData.id ||
-        gameState.flip2 === cardData.id
+        // gameState.flip1 === cardData.id ||
+        // gameState.flip2 === cardData.id
+        !flippedBy
       ) {
         nextPlayer(setScoreData, !scoreData.isPlayer1Turn);
         setTimeout(() => {
@@ -67,7 +72,7 @@ export default function Card({
       onClick={handleClick}
     >
       <div className="flip-card-inner">
-        <div className="flip-card-back">
+        <div className={"flip-card-back " + flippedBy}>
           <img src={cardData.url} alt={getBreed(cardData)} />
         </div>
         <div className="flip-card-front">

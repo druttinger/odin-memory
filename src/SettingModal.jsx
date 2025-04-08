@@ -10,8 +10,9 @@ export default function SettingModal({
   setScoreData,
   setCardMap,
   setWeightMap,
+  setIsActive,
 }) {
-  const [modalSize, setModalSize] = useState(10); // Use state instead of ref
+  const [modalSize, setModalSize] = useState(3); // Use state instead of ref
   const [modalPlayAi, setModalPlayAi] = useState(false);
 
   const resetGame = () => {
@@ -28,6 +29,7 @@ export default function SettingModal({
     setScoreData({ player1: 0, player2: 0, isPlayer1Turn: true });
     setCardMap([]);
     setWeightMap({});
+    setIsActive(new Array(modalSize * 2).fill(false));
   };
 
   const handleClose = () => {
@@ -40,7 +42,6 @@ export default function SettingModal({
       <PawSVG />
       <h3>Game Settings</h3>
       <div>
-        {/* <label> */}
         <label>
           <input
             type="radio"
@@ -76,12 +77,11 @@ export default function SettingModal({
           />
         </label>
         Play against AI
-        {/* </label> */}
         <br />
         <label>
           <input
             type="number"
-            value={modalSize.current || 10}
+            value={modalSize}
             min="3"
             max="20"
             onChange={(e) => {

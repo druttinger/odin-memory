@@ -55,7 +55,6 @@ export default function App() {
     setIsActive(new Array(gameState.gameSize * 2).fill(false));
     // if (img && img.length > 0 && img.length < gameState.gameSize)
     fetchImages(setImg, gameState.gameSize);
-    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState.gameSize]);
 
   // initialize cardMap and weightMap arrays
@@ -63,7 +62,7 @@ export default function App() {
     // Initialize the weightMap after images are fetched
     console.log("initializing game part 2", img);
     if (!modalOpen) mapCards(img, setCardMap, setWeightMap);
-  }, [img]);
+  }, [img, modalOpen]);
 
   //check to see if it is an AI turn
   useEffect(() => {
@@ -122,14 +121,16 @@ export default function App() {
           setScoreData={setScoreData}
           setCardMap={setCardMap}
           setWeightMap={setWeightMap}
+          setIsActive={setIsActive}
         />
-      ) : null}
-      {ScoreBoard(
-        scoreData,
-        checkGameOver,
-        gameState,
-        modalOpen,
-        setIsModalOpen
+      ) : (
+        ScoreBoard(
+          scoreData,
+          checkGameOver,
+          gameState,
+          modalOpen,
+          setIsModalOpen
+        )
       )}
       <div className="gameBox">
         {cardMap.map((cardData) => (
