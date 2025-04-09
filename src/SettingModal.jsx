@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import robotFace from "./assets/robot-face-svgrepo-com.svg";
 import humanFace from "./assets/face-savoring-food-svgrepo-com.svg";
 import { PawSVG } from "./pawSVG";
+import { CardSizer } from "./CardSizer";
 
 export default function SettingModal({
   setIsModalOpen,
@@ -81,22 +82,7 @@ export default function SettingModal({
         </label>
         Play against AI
         <br />
-        <label>
-          <input
-            type="number"
-            value={modalSize}
-            min="3"
-            max="20"
-            onChange={(e) => {
-              setModalSize(e.target.value);
-            }}
-            onBlur={(e) => {
-              const newSize = Math.max(3, Math.min(20, e.target.value)); // Clamp value between 3 and 20
-              setModalSize(newSize);
-            }}
-          />
-          Game Size (3-20)
-        </label>
+        <CardSizer modalSize={modalSize} setModalSize={setModalSize} />
       </div>
       <button onClick={resetGame}>New Game</button>
       {checkGameOver() || <button onClick={handleClose}>Cancel</button>}

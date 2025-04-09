@@ -247,3 +247,32 @@ label {
   background-color: red;
   transition: all 0.3s ease;
 }
+
+.settingCard {
+  background-color: grey;
+  border: 1px solid black;
+  color: black;
+  border-radius: 5px;
+  width: 20px;
+  height: 30px;
+  margin: auto;
+  text-align: center;
+}
+
+.settingCard:hover {
+  background-color: pink;
+  border: 1px solid red;
+  color: red;
+  cursor: pointer;
+}
+
+.highlightCard {
+  background-color: violet;
+  border: 1px solid purple;
+  color: purple;
+}
+
+.cardSizer {
+  display: flex;
+  flex-direction: row;
+}
