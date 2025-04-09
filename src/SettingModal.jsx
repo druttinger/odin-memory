@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import robotFace from "./assets/robot-face-svgrepo-com.svg";
+import humanFace from "./assets/face-savoring-food-svgrepo-com.svg";
 import { PawSVG } from "./pawSVG";
 
 export default function SettingModal({
@@ -11,8 +13,9 @@ export default function SettingModal({
   setCardMap,
   setWeightMap,
   setIsActive,
+  checkGameOver,
 }) {
-  const [modalSize, setModalSize] = useState(3); // Use state instead of ref
+  const [modalSize, setModalSize] = useState(3);
   const [modalPlayAi, setModalPlayAi] = useState(false);
 
   const resetGame = () => {
@@ -22,7 +25,7 @@ export default function SettingModal({
       flip1: "",
       flip2: "",
       awaitUpdate: true,
-      gameSize: modalSize, // Use state value here
+      gameSize: modalSize,
       playAI: modalPlayAi,
       gameOver: false,
     });
@@ -53,7 +56,7 @@ export default function SettingModal({
             }}
           />
           <img
-            src="./src/assets/face-savoring-food-svgrepo-com.svg"
+            src={humanFace}
             alt="Play against a friend"
             width={50}
             height={50}
@@ -70,7 +73,7 @@ export default function SettingModal({
             }}
           />
           <img
-            src="./src/assets/robot-face-svgrepo-com.svg"
+            src={robotFace}
             alt="Play against the computer"
             width={50}
             height={50}
@@ -85,8 +88,10 @@ export default function SettingModal({
             min="3"
             max="20"
             onChange={(e) => {
+              setModalSize(e.target.value);
+            }}
+            onBlur={(e) => {
               const newSize = Math.max(3, Math.min(20, e.target.value)); // Clamp value between 3 and 20
-              console.log("New game size:", newSize);
               setModalSize(newSize);
             }}
           />
@@ -94,7 +99,7 @@ export default function SettingModal({
         </label>
       </div>
       <button onClick={resetGame}>New Game</button>
-      {!gameState.gameOver || <button onClick={handleClose}>Cancel</button>}
+      {checkGameOver() || <button onClick={handleClose}>Cancel</button>}
     </dialog>
   );
 }

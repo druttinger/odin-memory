@@ -122,6 +122,7 @@ export default function App() {
           setCardMap={setCardMap}
           setWeightMap={setWeightMap}
           setIsActive={setIsActive}
+          checkGameOver={checkGameOver}
         />
       ) : (
         ScoreBoard(

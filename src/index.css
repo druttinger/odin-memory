@@ -15,6 +15,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(160deg, white, indigo);
 }
 
 a {
@@ -111,10 +112,19 @@ button:focus-visible {
   background-color: #bbb;
   color: black;
   border-radius: 25px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .flip-card-front > img {
   width: 150px;
   height: 150px;
+}
+.flip-card-front:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 /* Style the back side */
@@ -123,6 +133,7 @@ button:focus-visible {
   color: white;
   transform: rotateY(180deg);
   border-radius: 25px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .flip-card-back > img {
@@ -211,6 +222,7 @@ button:focus-visible {
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 label {
