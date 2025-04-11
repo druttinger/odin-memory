@@ -1,10 +1,10 @@
 import React from "react";
 
-export const PawSVG = () => {
+export const PawSVG = ({ width = 100, height = 100 }) => {
   return (
     <svg
-      height="100px"
-      width="100px"
+      height={height}
+      width={width}
       version="1.1"
       id="Capa_1"
       xmlns="http://www.w3.org/2000/svg"

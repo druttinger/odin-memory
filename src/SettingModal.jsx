@@ -45,7 +45,7 @@ export default function SettingModal({
       <h2>Puppy Memory</h2>
       <PawSVG />
       <h3>Game Settings</h3>
-      <div>
+      <span>
         <label>
           <input
             type="radio"
@@ -59,8 +59,8 @@ export default function SettingModal({
           <img
             src={humanFace}
             alt="Play against a friend"
-            width={50}
-            height={50}
+            width={90}
+            height={90}
           />
         </label>
         <label>
@@ -76,14 +76,14 @@ export default function SettingModal({
           <img
             src={robotFace}
             alt="Play against the computer"
-            width={50}
-            height={50}
+            width={90}
+            height={90}
           />
         </label>
-        Play against AI
-        <br />
-        <CardSizer modalSize={modalSize} setModalSize={setModalSize} />
-      </div>
+      </span>
+      Play against {modalPlayAi ? "AI" : "a friend"}
+      <br />
+      <CardSizer modalSize={modalSize} setModalSize={setModalSize} />
       <button onClick={resetGame}>New Game</button>
       {checkGameOver() || <button onClick={handleClose}>Cancel</button>}
     </dialog>

@@ -11,11 +11,16 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+}
+
+#root {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  /* align-items: center; */
   background: linear-gradient(160deg, white, indigo);
+  height: 100vh;
+  width: 100vw;
 }
 
 a {
@@ -75,11 +80,13 @@ button:focus-visible {
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
   background-color: transparent;
-  width: 300px;
-  height: 300px;
+  width: minmax(30vh, 30vw);
+  height: minmax(30vh, 30vw);
+  /* width: 300px;
+  height: 300px; */
   border-radius: 25px;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
-  flex: 1 1 auto;
+  /* flex: 0 0 auto; */
 }
 
 /* This container is needed to position the front and back side */
@@ -143,25 +150,34 @@ button:focus-visible {
   border-radius: 25px;
 }
 
-/* .gameBox {
+.gameBox {
   display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: auto;
-  gap: 1rem;
-  width: calc(100% - 40px);
-  height: calc(100% - 40px);
-  margin: 20px;
-} */
+  /* align-items: space-around;
+  justify-items: space-around; */
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-rows: repeat(auto-fill, minmax(150px, 1fr));  */
+  /* gap: 1rem; */
+  /* width: 100%; */
+  /* width: calc(100% - 40px);
+  height: calc(100% - 40px); */
+  /* margin: 20px;*/
+}
 /* .gameBox {
   display: flex;
   flex-wrap: wrap;
-  justify-content: stretch;
+  justify-content: space-around;
+  align-items: space-around;
   gap: 1rem;
   width: calc(100% - 40px);
   height: calc(100% - 40px);
-  margin: 20px;
-} */
-.gameBox {
+  /* flex: 0 0 auto; */
+/* margin: 20px; */
+/* } */
+
+/* .gameBox {
   display: flex;
   flex-wrap: wrap;
   justify-content: stretch;
@@ -170,15 +186,36 @@ button:focus-visible {
   height: 100%;
   flex: 1 1 auto;
   margin: 20px;
-}
+} */
 
 .scoreBoard {
-  font-size: 24px;
+  font-size: 32px;
   display: flex;
-  width: auto;
-  margin: 20px;
+  height: 100px;
+  /* width: 100%; */
+  /* margin: 20px; */
   justify-content: space-around;
-  flex: 1 1 auto;
+  align-items: end;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  opacity: 0.5;
+  background-color: white;
+  padding: 10px;
+  z-index: 1;
+  border-radius: 10px 0 0 0;
+  /* flex: 0 0 auto; */
+}
+
+.scoreBoard:hover {
+  opacity: 1;
+  transform: scale(1.2);
+  transition: all 0.2s ease;
+}
+.scoreBoard:not(:hover) {
+  opacity: 0.8;
+  transform: scale(1);
+  transition: all 0.2s ease;
 }
 
 .currentPlayer {
@@ -195,6 +232,7 @@ button:focus-visible {
 
 /* IMAGE STYLES */
 [type="radio"] + img {
+  padding: 5px;
   cursor: pointer;
 }
 
@@ -226,6 +264,9 @@ button:focus-visible {
 }
 
 label {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -256,14 +297,28 @@ label {
   width: 20px;
   height: 30px;
   margin: auto;
-  text-align: center;
+  text-align: left;
+  font-size: small;
+  position: absolute;
+  /* left: 75%;
+  top: 50%; */
+  transform-origin: center 500%;
 }
 
-.settingCard:hover {
+.cardGroup {
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.cardGroup:hover > div {
   background-color: pink;
   border: 1px solid red;
   color: red;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cardGroup:hover {
+  transform: scale(1.05);
+  transition: all 0.2s ease;
 }
 
 .highlightCard {
@@ -275,4 +330,14 @@ label {
 .cardSizer {
   display: flex;
   flex-direction: row;
+  height: 100px;
+  width: 100px;
+}
+
+span {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: space-around;
+  gap: 20px;
 }

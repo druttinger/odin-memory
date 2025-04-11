@@ -11,6 +11,7 @@ export default function Card({
   isActive,
   setIsActive,
   incrementWeight,
+  size,
 }) {
   const [flippedBy, setFlippedBy] = useState("");
 
@@ -70,14 +71,18 @@ export default function Card({
     <div
       className={"flip-card" + (isActive ? " active" : "")}
       onClick={handleClick}
+      style={{
+        width: size,
+        height: size,
+      }}
     >
       <div className="flip-card-inner">
         <div className={"flip-card-back " + flippedBy}>
           <img src={cardData.url} alt={getBreed(cardData)} />
         </div>
         <div className="flip-card-front">
-          <h1>Puppy Memory</h1>
-          <PawSVG />
+          <h1 style={{ fontSize: Math.floor(size / 6) }}>Puppy Memory</h1>
+          <PawSVG width={Math.floor(size / 3)} height={Math.floor(size / 3)} />
         </div>
       </div>
     </div>

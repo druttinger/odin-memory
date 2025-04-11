@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { fetchImages, mapCards } from "./fetchImages";
-import Card from "./Card";
 import AiPlayer from "./AiPlayer";
 import { ScoreBoard } from "./ScoreBoard";
 import SettingModal from "./SettingModal";
+import { GameBox } from "./GameBox";
 
 export default function App() {
-  const DEFAULT_GAME_SIZE = 10;
+  const DEFAULT_GAME_SIZE = 9;
   const [img, setImg] = useState([]);
   const [cardMap, setCardMap] = useState([]);
   const [scoreData, setScoreData] = useState({
@@ -133,25 +133,17 @@ export default function App() {
           setIsModalOpen
         )
       )}
-      <div className="gameBox">
-        {cardMap.map((cardData) => (
-          <Card
-            cardData={cardData}
-            key={cardData.id + cardData.order}
-            order={cardData.order}
-            scoreData={scoreData}
-            setScoreData={setScoreData}
-            gameState={gameState}
-            setGameState={setGameState}
-            isActive={isActive[cardData.order]}
-            setIsActive={(active) => {
-              setNthCardActive(cardData.order, active);
-            }}
-            incrementWeight={incrementWeight}
-            aiTurn={aiTurn}
-          />
-        ))}
-      </div>
+      {GameBox(
+        cardMap,
+        scoreData,
+        setScoreData,
+        gameState,
+        setGameState,
+        isActive,
+        setNthCardActive,
+        incrementWeight,
+        aiTurn
+      )}
     </>
   );
 }

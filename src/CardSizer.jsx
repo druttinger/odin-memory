@@ -2,31 +2,37 @@ import React from "react";
 
 export function CardSizer({ modalSize, setModalSize }) {
   const cards = [];
-  for (let i = 1; i <= 15; i++) {
+  for (let i = 3; i <= 15; i += 3) {
     cards.push(
-      <div
-        className={
-          "settingCard" +
-          (console.log(i, modalSize) || i <= modalSize ? " highlightCard" : "")
-        }
-        style={{
-          transform:
-            `rotate(${i * 10 - 70}deg) ` +
-            `translatex(${i * 7 - 40}px) ` +
-            `translatey(${i < 7 ? (i - 7) * -5 : (7 - i) * -4}px)`,
-        }}
-        key={i}
-        onClick={() => setModalSize(i < 3 ? 3 : i)}
-      >
-        {i}
+      <div key={i} className="cardGroup" onClick={() => setModalSize(i)}>
+        <div
+          className={"settingCard" + (i <= modalSize ? " highlightCard" : "")}
+          style={{
+            transform: `rotate(${i * 6 - 60}deg) `,
+          }}
+        ></div>
+        <div
+          className={"settingCard" + (i <= modalSize ? " highlightCard" : "")}
+          style={{
+            transform: `rotate(${i * 6 - 54}deg) `,
+          }}
+        ></div>
+        <div
+          className={"settingCard" + (i <= modalSize ? " highlightCard" : "")}
+          style={{
+            transform: `rotate(${i * 6 - 48}deg) `,
+          }}
+        >
+          {i}
+        </div>
       </div>
     );
   }
   return (
-    <ul className="cardSizer">
+    <div className="cardSizer">
       {cards}
-      <h1>{modalSize}</h1>
-    </ul>
+      {/* <h1>{modalSize}</h1> */}
+    </div>
   );
   // return (
   //   <label>
