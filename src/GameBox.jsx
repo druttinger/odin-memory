@@ -20,12 +20,13 @@ export function GameBox(
   aiTurn
 ) {
   const [gameBoxInfo, setGameBoxInfo] = React.useState({
-    size: window.innerWidth / 3 - 20,
+    size: 0, //window.innerWidth / 3 - 20,
     xCount: 3,
     yCount: 2,
     spacing: 0.15,
   });
 
+  // adjust the size of the game box based on the window size
   React.useEffect(() => {
     const handleResize = () => {
       let newXCount, newYCount, newSpacing;
@@ -66,35 +67,41 @@ export function GameBox(
     };
   }, [gameState]);
 
-  return (
-    <div
-      className="gameBox"
-      style={{
-        // width: gameBoxInfo.size * gameBoxInfo.xCount,
-        // height: gameBoxInfo.size * gameBoxInfo.yCount,
-        gridTemplateColumns: `repeat(${gameBoxInfo.xCount}, ${gameBoxInfo.size}px)`,
-        gridTemplateRows: `repeat(${gameBoxInfo.yCount}, ${gameBoxInfo.size}px)`,
-        gap: `${gameBoxInfo.spacing * gameBoxInfo.size}px`,
-      }}
-    >
-      {cardMap.map((cardData) => (
-        <Card
-          cardData={cardData}
-          key={cardData.id + cardData.order}
-          order={cardData.order}
-          scoreData={scoreData}
-          setScoreData={setScoreData}
-          gameState={gameState}
-          setGameState={setGameState}
-          isActive={isActive[cardData.order]}
-          setIsActive={(active) => {
-            setNthCardActive(cardData.order, active);
-          }}
-          incrementWeight={incrementWeight}
-          aiTurn={aiTurn}
-          size={gameBoxInfo.size * (1 - gameBoxInfo.spacing)} // size of the card
-        />
-      ))}
-    </div>
-  );
+  if (gameBoxInfo.size > 0)
+    return (
+      <div
+        className="gameBox"
+        style={{
+          // width: gameBoxInfo.size * gameBoxInfo.xCount,
+          // height: gameBoxInfo.size * gameBoxInfo.yCount,
+          margin: `${gameBoxInfo.spacing * gameBoxInfo.size}px 0 0 0`,
+          gridTemplateColumns: `repeat(${gameBoxInfo.xCount}, ${
+            gameBoxInfo.size * (1 - 1 * gameBoxInfo.spacing)
+          }px)`,
+          gridTemplateRows: `repeat(${gameBoxInfo.yCount}, ${
+            gameBoxInfo.size * (1 - 1 * gameBoxInfo.spacing)
+          }px)`,
+          gap: `${gameBoxInfo.spacing * gameBoxInfo.size}px`,
+        }}
+      >
+        {cardMap.map((cardData) => (
+          <Card
+            cardData={cardData}
+            key={cardData.id + cardData.order}
+            order={cardData.order}
+            scoreData={scoreData}
+            setScoreData={setScoreData}
+            gameState={gameState}
+            setGameState={setGameState}
+            isActive={isActive[cardData.order]}
+            setIsActive={(active) => {
+              setNthCardActive(cardData.order, active);
+            }}
+            incrementWeight={incrementWeight}
+            aiTurn={aiTurn}
+            size={gameBoxInfo.size * (1 - 1 * gameBoxInfo.spacing)} // size of the card
+          />
+        ))}
+      </div>
+    );
 }

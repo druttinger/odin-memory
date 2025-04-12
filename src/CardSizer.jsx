@@ -31,7 +31,7 @@ export function CardSizer({ modalSize, setModalSize }) {
   return (
     <div className="cardSizer">
       {cards}
-      {/* <h1>{modalSize}</h1> */}
+      <h1>{modalSize}</h1>
     </div>
   );
   // return (

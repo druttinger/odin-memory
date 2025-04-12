@@ -1,4 +1,5 @@
 import React from "react";
+import cogSVG from "./assets/cog-svgrepo-com.svg";
 
 function openModel(setIsModalOpen) {
   setIsModalOpen(true);
@@ -33,7 +34,15 @@ export function ScoreBoard(
         </span>
       ) : null}
       {modalOpen || (
-        <button onClick={() => openModel(setIsModalOpen)}>Options</button>
+        // <button onClick={() => openModel(setIsModalOpen)}>
+        <img
+          className="settings"
+          src={cogSVG}
+          height={50}
+          width={50}
+          onClick={() => openModel(setIsModalOpen)}
+        />
+        // </button>
       )}
     </div>
   );

@@ -4,9 +4,11 @@ import AiPlayer from "./AiPlayer";
 import { ScoreBoard } from "./ScoreBoard";
 import SettingModal from "./SettingModal";
 import { GameBox } from "./GameBox";
+import Confetti from "react-confetti";
 
 export default function App() {
   const DEFAULT_GAME_SIZE = 9;
+  const MAX_GAME_SIZE = 15;
   const [img, setImg] = useState([]);
   const [cardMap, setCardMap] = useState([]);
   const [scoreData, setScoreData] = useState({
@@ -23,7 +25,7 @@ export default function App() {
     gameSize: DEFAULT_GAME_SIZE,
   });
   const [isActive, setIsActive] = useState(
-    []
+    [false]
     // new Array(gameState.gameSize * 2).fill(false)
   );
   const [weightMap, setWeightMap] = useState({});
@@ -49,19 +51,21 @@ export default function App() {
     }, 500);
   }, [isActive, weightMap, cardMap]);
 
-  // initialize img and isActive arrays
+  // fetch images for max game size
   useEffect(() => {
-    console.log("initializing game part 1", gameState.gameSize);
-    setIsActive(new Array(gameState.gameSize * 2).fill(false));
+    // console.log("initializing game part 1", gameState.gameSize);
+    // setIsActive(new Array(gameState.gameSize * 2).fill(false));
     // if (img && img.length > 0 && img.length < gameState.gameSize)
-    fetchImages(setImg, gameState.gameSize);
-  }, [gameState.gameSize]);
+    fetchImages(setImg, MAX_GAME_SIZE);
+  }, []);
 
   // initialize cardMap and weightMap arrays
   useEffect(() => {
     // Initialize the weightMap after images are fetched
     console.log("initializing game part 2", img);
-    if (!modalOpen) mapCards(img, setCardMap, setWeightMap);
+    if (!modalOpen)
+      mapCards(img.slice(0, gameState.gameSize), setCardMap, setWeightMap);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [img, modalOpen]);
 
   //check to see if it is an AI turn
@@ -132,6 +136,14 @@ export default function App() {
           modalOpen,
           setIsModalOpen
         )
+      )}
+      {checkGameOver() && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          numberOfPieces={(window.innerWidth * window.innerHeight) / 1000}
+          recycle={false}
+        />
       )}
       {GameBox(
         cardMap,

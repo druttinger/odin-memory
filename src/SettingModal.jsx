@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import robotFace from "./assets/robot-face-svgrepo-com.svg";
 import humanFace from "./assets/face-savoring-food-svgrepo-com.svg";
+import returnSVG from "./assets/previous-return-svgrepo-com.svg";
 import { PawSVG } from "./pawSVG";
 import { CardSizer } from "./CardSizer";
 
@@ -16,10 +17,10 @@ export default function SettingModal({
   setIsActive,
   checkGameOver,
 }) {
-  const [modalSize, setModalSize] = useState(3);
-  const [modalPlayAi, setModalPlayAi] = useState(false);
+  const [modalSize, setModalSize] = useState(gameState.gameSize);
+  const [optionText, setOptionText] = useState("");
 
-  const resetGame = () => {
+  const resetGame = (playAI) => {
     setIsModalOpen(false);
     setGameState({
       ...gameState,
@@ -27,7 +28,7 @@ export default function SettingModal({
       flip2: "",
       awaitUpdate: true,
       gameSize: modalSize,
-      playAI: modalPlayAi,
+      playAI: playAI,
       gameOver: false,
     });
     setScoreData({ player1: 0, player2: 0, isPlayer1Turn: true });
@@ -45,20 +46,23 @@ export default function SettingModal({
       <h2>Puppy Memory</h2>
       <PawSVG />
       <h3>Game Settings</h3>
+      <CardSizer modalSize={modalSize} setModalSize={setModalSize} />
       <span>
         <label>
           <input
             type="radio"
             name="ai"
             value="human"
-            checked={!modalPlayAi} // Checked when modalPlayAI.current is false
+            // checked={!modalPlayAi} // Checked when modalPlayAI.current is false
             onChange={() => {
-              setModalPlayAi(false); // Update modalPlayAI to false
+              resetGame(false);
             }}
           />
           <img
             src={humanFace}
             alt="Play against a friend"
+            onMouseEnter={() => setOptionText("Play against a friend")}
+            onMouseLeave={() => setOptionText("")}
             width={90}
             height={90}
           />
@@ -68,24 +72,41 @@ export default function SettingModal({
             type="radio"
             name="ai"
             value="ai"
-            checked={modalPlayAi} // Checked when modalPlayAI.current is true
+            // checked={modalPlayAi} // Checked when modalPlayAI.current is true
             onChange={() => {
-              setModalPlayAi(true);
+              resetGame(true);
             }}
           />
           <img
             src={robotFace}
             alt="Play against the computer"
+            onMouseEnter={() => setOptionText("Play against the computer")}
+            onMouseLeave={() => setOptionText("")}
             width={90}
             height={90}
           />
         </label>
+        {checkGameOver() || (
+          <label>
+            <input
+              type="radio"
+              name="close"
+              value="close"
+              onChange={handleClose}
+            />
+            <img
+              src={returnSVG}
+              alt="Return to game"
+              onMouseEnter={() => setOptionText("Return to game")}
+              onMouseLeave={() => setOptionText("")}
+              width={90}
+              height={90}
+            />
+          </label>
+        )}
       </span>
-      Play against {modalPlayAi ? "AI" : "a friend"}
-      <br />
-      <CardSizer modalSize={modalSize} setModalSize={setModalSize} />
-      <button onClick={resetGame}>New Game</button>
-      {checkGameOver() || <button onClick={handleClose}>Cancel</button>}
+      <div className="optionText"> {optionText}</div>
+      {/* <br /> */}
     </dialog>
   );
 }
