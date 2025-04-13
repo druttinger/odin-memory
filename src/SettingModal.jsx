@@ -10,32 +10,11 @@ export default function SettingModal({
   setIsModalOpen,
   modalOpen,
   gameState,
-  setGameState,
-  setScoreData,
-  setCardMap,
-  setWeightMap,
-  setIsActive,
   checkGameOver,
+  resetGame,
 }) {
   const [modalSize, setModalSize] = useState(gameState.gameSize);
   const [optionText, setOptionText] = useState("");
-
-  const resetGame = (playAI) => {
-    setIsModalOpen(false);
-    setGameState({
-      ...gameState,
-      flip1: "",
-      flip2: "",
-      awaitUpdate: true,
-      gameSize: modalSize,
-      playAI: playAI,
-      gameOver: false,
-    });
-    setScoreData({ player1: 0, player2: 0, isPlayer1Turn: true });
-    setCardMap([]);
-    setWeightMap({});
-    setIsActive(new Array(modalSize * 2).fill(false));
-  };
 
   const handleClose = () => {
     setIsModalOpen(false);
@@ -55,7 +34,7 @@ export default function SettingModal({
             value="human"
             // checked={!modalPlayAi} // Checked when modalPlayAI.current is false
             onChange={() => {
-              resetGame(false);
+              resetGame(false, modalSize);
             }}
           />
           <img
@@ -74,7 +53,7 @@ export default function SettingModal({
             value="ai"
             // checked={modalPlayAi} // Checked when modalPlayAI.current is true
             onChange={() => {
-              resetGame(true);
+              resetGame(true, modalSize);
             }}
           />
           <img

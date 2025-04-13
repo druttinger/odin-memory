@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { fetchImages, mapCards } from "./fetchImages";
+import { fetchImages, mapCards, shuffleArray } from "./fetchImages";
 import AiPlayer from "./AiPlayer";
 import { ScoreBoard } from "./ScoreBoard";
 import SettingModal from "./SettingModal";
 import { GameBox } from "./GameBox";
-import Confetti from "react-confetti";
+import DisplayGameOver from "./DisplayGameOver";
 
 export default function App() {
   const DEFAULT_GAME_SIZE = 9;
@@ -63,10 +63,16 @@ export default function App() {
   useEffect(() => {
     // Initialize the weightMap after images are fetched
     console.log("initializing game part 2", img);
-    if (!modalOpen)
-      mapCards(img.slice(0, gameState.gameSize), setCardMap, setWeightMap);
+    if (!modalOpen && img && img.length > 0 && cardMap.length === 0) {
+      mapCards(
+        // mix up the images for variety, but skip if all are getting used
+        gameState.gameSize !== 15 ? shuffleArray(img, gameState.gameSize) : img,
+        setCardMap,
+        setWeightMap
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [img, modalOpen]);
+  }, [img, modalOpen, cardMap]);
 
   //check to see if it is an AI turn
   useEffect(() => {
@@ -103,12 +109,27 @@ export default function App() {
     });
   };
 
+  const resetGame = (playAI, gameSize) => {
+    setIsModalOpen(true);
+    setIsModalOpen(false);
+    setGameState({
+      ...gameState,
+      flip1: "",
+      flip2: "",
+      awaitUpdate: true,
+      gameSize: gameSize ?? gameState.gameSize,
+      playAI: playAI ?? gameState.playAI,
+      gameOver: false,
+    });
+    setScoreData({ player1: 0, player2: 0, isPlayer1Turn: true });
+    setCardMap([]);
+    setWeightMap({});
+    setIsActive(new Array((gameSize ?? gameState.gameSize) * 2).fill(false));
+  };
+
   function checkGameOver() {
     if (isActive.every((each) => each)) {
-      // setGameState((prevState) => ({
-      //   ...prevState,
-      //   gameOver: true,
-      // }));
+      // setGameMessage(["Game Over", scoreData.isPlayer1Turn]);
       return true;
     }
     return false;
@@ -121,41 +142,35 @@ export default function App() {
           setIsModalOpen={setIsModalOpen}
           modalOpen={modalOpen}
           gameState={gameState}
-          setGameState={setGameState}
-          setScoreData={setScoreData}
-          setCardMap={setCardMap}
-          setWeightMap={setWeightMap}
-          setIsActive={setIsActive}
           checkGameOver={checkGameOver}
+          resetGame={resetGame}
+        />
+      ) : checkGameOver() ? (
+        <DisplayGameOver
+          scoreData={scoreData}
+          resetGame={resetGame}
+          setIsModalOpen={setIsModalOpen}
         />
       ) : (
-        ScoreBoard(
-          scoreData,
-          checkGameOver,
-          gameState,
-          modalOpen,
-          setIsModalOpen
-        )
-      )}
-      {checkGameOver() && (
-        <Confetti
-          width={window.innerWidth}
-          height={window.innerHeight}
-          numberOfPieces={(window.innerWidth * window.innerHeight) / 1000}
-          recycle={false}
+        <ScoreBoard
+          scoreData={scoreData}
+          checkGameOver={checkGameOver}
+          gameState={gameState}
+          modalOpen={modalOpen}
+          setIsModalOpen={setIsModalOpen}
         />
       )}
-      {GameBox(
-        cardMap,
-        scoreData,
-        setScoreData,
-        gameState,
-        setGameState,
-        isActive,
-        setNthCardActive,
-        incrementWeight,
-        aiTurn
-      )}
+      <GameBox
+        cardMap={cardMap}
+        scoreData={scoreData}
+        setScoreData={setScoreData}
+        gameState={gameState}
+        setGameState={setGameState}
+        isActive={isActive}
+        setNthCardActive={setNthCardActive}
+        incrementWeight={incrementWeight}
+        aiTurn={aiTurn}
+      />
     </>
   );
 }

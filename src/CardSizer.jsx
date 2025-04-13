@@ -1,4 +1,5 @@
 import React from "react";
+import { PawSVG } from "./pawSVG";
 
 export function CardSizer({ modalSize, setModalSize }) {
   const cards = [];
@@ -32,6 +33,7 @@ export function CardSizer({ modalSize, setModalSize }) {
     <div className="cardSizer">
       {cards}
       <h1>{modalSize}</h1>
+      <PawSVG width="20" height="20" />
     </div>
   );
   // return (

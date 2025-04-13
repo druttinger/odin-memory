@@ -43,6 +43,18 @@ const random = (max) => {
   return Math.floor(Math.random() * max);
 };
 
+const shuffleArray = (array, size = 9) => {
+  const shuffledArray = [];
+  const tempArray = [...array];
+  for (let i = 0; i < size; i++) {
+    const randomIndex = Math.floor(Math.random() * tempArray.length);
+    shuffledArray.push(tempArray[randomIndex]);
+    tempArray.splice(randomIndex, 1);
+  }
+  // console.log("shuffledArray", shuffledArray);
+  return shuffledArray;
+};
+
 const getBreed = (dogInfo) => {
   return dogInfo.breeds[0].name;
 };
@@ -57,4 +69,4 @@ function randomDog(dogArray, dog) {
   }
 }
 
-export { fetchImages, getBreed, mapCards, random };
+export { fetchImages, getBreed, mapCards, random, shuffleArray };

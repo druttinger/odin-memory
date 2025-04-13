@@ -5,13 +5,13 @@ function openModel(setIsModalOpen) {
   setIsModalOpen(true);
 }
 
-export function ScoreBoard(
+export function ScoreBoard({
   scoreData,
   checkGameOver,
   gameState,
   modalOpen,
-  setIsModalOpen
-) {
+  setIsModalOpen,
+}) {
   return (
     <div className="scoreBoard">
       <span className={scoreData.isPlayer1Turn ? "currentPlayer" : ""}>
@@ -19,7 +19,8 @@ export function ScoreBoard(
       </span>
       <span>{scoreData.isPlayer1Turn ? " < " : " > "}</span>
       <span className={!scoreData.isPlayer1Turn ? "currentPlayer" : ""}>
-        {(gameState.playAI ? "Computer: " : "Player 2: ") + scoreData.player2}
+        {(gameState && gameState.playAI ? "Computer: " : "Player 2: ") +
+          scoreData.player2}
       </span>
       {checkGameOver() ? (
         <span>

@@ -74,13 +74,35 @@ export default function Card({
       style={{
         width: size,
         height: size,
+        borderRadius: size / 4,
       }}
     >
-      <div className="flip-card-inner">
-        <div className={"flip-card-back " + flippedBy}>
-          <img src={cardData.url} alt={getBreed(cardData)} />
+      <div
+        className="flip-card-inner"
+        style={{
+          borderRadius: size / 4,
+        }}
+      >
+        <div
+          className={"flip-card-back " + flippedBy}
+          style={{
+            borderRadius: size / 4,
+          }}
+        >
+          <img
+            src={cardData.url}
+            alt={getBreed(cardData)}
+            style={{
+              borderRadius: size / 4,
+            }}
+          />
         </div>
-        <div className="flip-card-front">
+        <div
+          className="flip-card-front"
+          style={{
+            borderRadius: size / 4,
+          }}
+        >
           <h1 style={{ fontSize: Math.floor(size / 6) }}>Puppy Memory</h1>
           <PawSVG width={Math.floor(size / 3)} height={Math.floor(size / 3)} />
         </div>

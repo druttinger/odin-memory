@@ -8,7 +8,7 @@ const countArray = [
   [6, 5, 0.075],
 ];
 
-export function GameBox(
+export function GameBox({
   cardMap,
   scoreData,
   setScoreData,
@@ -17,8 +17,8 @@ export function GameBox(
   isActive,
   setNthCardActive,
   incrementWeight,
-  aiTurn
-) {
+  aiTurn,
+}) {
   const [gameBoxInfo, setGameBoxInfo] = React.useState({
     size: 0, //window.innerWidth / 3 - 20,
     xCount: 3,
@@ -46,20 +46,20 @@ export function GameBox(
         yCount: newYCount,
         spacing: newSpacing,
       };
-      console.log(
-        "tempInfo",
-        tempInfo.size,
-        window.innerWidth,
-        newXCount,
-        window.innerHeight,
-        newYCount
-      );
+      // console.log(
+      //   "tempInfo",
+      //   tempInfo.size,
+      //   window.innerWidth,
+      //   newXCount,
+      //   window.innerHeight,
+      //   newYCount
+      // );
       setGameBoxInfo(tempInfo);
       // setWidth(window.innerWidth);
       // setHeight(window.innerHeight);
     };
 
-    handleResize();
+    gameState && handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => {
