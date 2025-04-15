@@ -2,6 +2,7 @@ import React from "react";
 import Confetti from "react-confetti";
 import returnSVG from "./assets/previous-return-svgrepo-com.svg";
 import cogSVG from "./assets/cog-svgrepo-com.svg";
+import "./message.css";
 
 export default function DisplayGameOver({
   scoreData,

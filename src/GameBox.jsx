@@ -1,5 +1,7 @@
 import React from "react";
 import Card from "./Card";
+import "./GameBox.css";
+
 const countArray = [
   [3, 2, 0.075],
   [4, 3, 0.075],
@@ -17,6 +19,7 @@ export function GameBox({
   isActive,
   setNthCardActive,
   incrementWeight,
+  modalOpen,
   aiTurn,
 }) {
   const [gameBoxInfo, setGameBoxInfo] = React.useState({
@@ -46,17 +49,7 @@ export function GameBox({
         yCount: newYCount,
         spacing: newSpacing,
       };
-      // console.log(
-      //   "tempInfo",
-      //   tempInfo.size,
-      //   window.innerWidth,
-      //   newXCount,
-      //   window.innerHeight,
-      //   newYCount
-      // );
       setGameBoxInfo(tempInfo);
-      // setWidth(window.innerWidth);
-      // setHeight(window.innerHeight);
     };
 
     gameState && handleResize();
@@ -70,7 +63,7 @@ export function GameBox({
   if (gameBoxInfo.size > 0)
     return (
       <div
-        className="gameBox"
+        className={"gameBox" + (modalOpen ? "" : " unpaused")}
         style={{
           // width: gameBoxInfo.size * gameBoxInfo.xCount,
           // height: gameBoxInfo.size * gameBoxInfo.yCount,
@@ -98,6 +91,7 @@ export function GameBox({
               setNthCardActive(cardData.order, active);
             }}
             incrementWeight={incrementWeight}
+            modalOpen={modalOpen}
             aiTurn={aiTurn}
             size={gameBoxInfo.size * (1 - 1 * gameBoxInfo.spacing)} // size of the card
           />

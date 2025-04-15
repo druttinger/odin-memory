@@ -1,0 +1,102 @@
+.quickMessage,
+.gameMessage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.quickMessage > div,
+.gameMessage > div {
+  text-align: center;
+  font-weight: 700;
+  /* background-color: red; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
+  font-size: 100px;
+  text-shadow: 10px 10px 20px rgba(0, 0, 0);
+  animation: fadeIn 2s linear forwards;
+  /* animation: fadeIn 2s linear; */
+  z-index: 3;
+}
+
+.quickMessage > div {
+  animation: fadeIn 2s linear reverse forwards;
+  pointer-events: none;
+}
+
+.resetButtons {
+  flex: 2 1 2;
+  position: absolute;
+  top: 70%;
+}
+
+.resetButtons > div {
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: black;
+  border-radius: 10px;
+}
+
+.resetButtons > img {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  animation: fadeButton 3s linear;
+  /* animation: fadeButton 3s linear forwards; */
+  z-index: 3;
+  opacity: 0.8;
+  cursor: pointer;
+  padding: 10px;
+  margin: 50px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.resetButtons > img:hover {
+  background-color: lightgray;
+  /* opacity: 0.9; */
+}
+
+.quickMessage > .player1,
+.gameMessage > .player1 {
+  color: red;
+}
+
+.quickMessage > .player2,
+.gameMessage > .player2 {
+  color: blue;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeButton {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}

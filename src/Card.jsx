@@ -12,6 +12,7 @@ export default function Card({
   setIsActive,
   incrementWeight,
   size,
+  modalOpen,
 }) {
   const [flippedBy, setFlippedBy] = useState("");
 
@@ -33,7 +34,7 @@ export default function Card({
       ) {
         setFlippedBy(scoreData.isPlayer1Turn ? "player1flip" : "player2flip");
         incrementScore();
-        setGameState({ ...gameState, flip1: "", flip2: "" });
+        setGameState({ ...gameState, flip1: "", flip2: "", matchState: true });
       } else if (
         // gameState.flip1 === cardData.id ||
         // gameState.flip2 === cardData.id
@@ -51,15 +52,23 @@ export default function Card({
 
   const handleClick = () => {
     // this is what a player action looks like
-    if (!gameState.flip1) {
-      setFlip(cardData.id, "flip1");
-      incrementWeight(cardData.id);
-      setIsActive(true);
-    }
-    if (gameState.flip1 && !gameState.flip2) {
-      setFlip(cardData.id, "flip2");
-      incrementWeight(cardData.id);
-      setIsActive(true);
+    // check that it is not an AI turn, the modal is not open, and that they
+    // are not clicking the same card twice
+    if (
+      (!gameState.playAI || scoreData.isPlayer1Turn) &&
+      !modalOpen &&
+      !isActive
+    ) {
+      if (!gameState.flip1) {
+        setFlip(cardData.id, "flip1");
+        incrementWeight(cardData.id);
+        setIsActive(true);
+      }
+      if (gameState.flip1 && !gameState.flip2) {
+        setFlip(cardData.id, "flip2");
+        incrementWeight(cardData.id);
+        setIsActive(true);
+      }
     }
   };
 

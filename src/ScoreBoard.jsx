@@ -13,7 +13,12 @@ export function ScoreBoard({
   setIsModalOpen,
 }) {
   return (
-    <div className="scoreBoard">
+    <div
+      className={
+        "scoreBoard" +
+        (window.innerWidth < window.innerHeight ? " vertical" : " horizontal")
+      }
+    >
       <span className={scoreData.isPlayer1Turn ? "currentPlayer" : ""}>
         Player 1: {scoreData.player1}
       </span>

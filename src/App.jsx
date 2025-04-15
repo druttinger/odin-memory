@@ -5,6 +5,7 @@ import { ScoreBoard } from "./ScoreBoard";
 import SettingModal from "./SettingModal";
 import { GameBox } from "./GameBox";
 import DisplayGameOver from "./DisplayGameOver";
+import DisplayMatch from "./DisplayMatch";
 
 export default function App() {
   const DEFAULT_GAME_SIZE = 9;
@@ -23,11 +24,9 @@ export default function App() {
     playAI: true,
     gameOver: false,
     gameSize: DEFAULT_GAME_SIZE,
+    matchState: true,
   });
-  const [isActive, setIsActive] = useState(
-    [false]
-    // new Array(gameState.gameSize * 2).fill(false)
-  );
+  const [isActive, setIsActive] = useState([false]);
   const [weightMap, setWeightMap] = useState({});
   const [modalOpen, setIsModalOpen] = useState(true);
 
@@ -53,9 +52,6 @@ export default function App() {
 
   // fetch images for max game size
   useEffect(() => {
-    // console.log("initializing game part 1", gameState.gameSize);
-    // setIsActive(new Array(gameState.gameSize * 2).fill(false));
-    // if (img && img.length > 0 && img.length < gameState.gameSize)
     fetchImages(setImg, MAX_GAME_SIZE);
   }, []);
 
@@ -120,6 +116,7 @@ export default function App() {
       gameSize: gameSize ?? gameState.gameSize,
       playAI: playAI ?? gameState.playAI,
       gameOver: false,
+      matchState: false,
     });
     setScoreData({ player1: 0, player2: 0, isPlayer1Turn: true });
     setCardMap([]);
@@ -160,6 +157,17 @@ export default function App() {
           setIsModalOpen={setIsModalOpen}
         />
       )}
+      {gameState.matchState &&
+        !modalOpen &&
+        !checkGameOver() &&
+        (console.log(gameState.flip1, gameState.flip2, checkGameOver()) || (
+          <DisplayMatch
+            scoreData={scoreData}
+            endAnimation={() =>
+              setGameState({ ...gameState, matchState: false })
+            }
+          />
+        ))}
       <GameBox
         cardMap={cardMap}
         scoreData={scoreData}
@@ -169,6 +177,7 @@ export default function App() {
         isActive={isActive}
         setNthCardActive={setNthCardActive}
         incrementWeight={incrementWeight}
+        modalOpen={modalOpen}
         aiTurn={aiTurn}
       />
     </>
