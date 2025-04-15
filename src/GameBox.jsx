@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "./Card";
-import "./GameBox.css";
+import "./styles/GameBox.css";
 
 const countArray = [
   [3, 2, 0.075],

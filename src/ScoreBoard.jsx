@@ -1,5 +1,6 @@
 import React from "react";
 import cogSVG from "./assets/cog-svgrepo-com.svg";
+import "./styles/settings.css";
 
 function openModel(setIsModalOpen) {
   setIsModalOpen(true);

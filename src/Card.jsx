@@ -35,15 +35,16 @@ export default function Card({
         setFlippedBy(scoreData.isPlayer1Turn ? "player1flip" : "player2flip");
         incrementScore();
         setGameState({ ...gameState, flip1: "", flip2: "", matchState: true });
-      } else if (
-        // gameState.flip1 === cardData.id ||
-        // gameState.flip2 === cardData.id
-        !flippedBy
-      ) {
-        nextPlayer(setScoreData, !scoreData.isPlayer1Turn);
+      } else if (!flippedBy) {
         setTimeout(() => {
+          setGameState({
+            ...gameState,
+            flip1: "",
+            flip2: "",
+            matchState: false,
+          });
+          nextPlayer(setScoreData, !scoreData.isPlayer1Turn);
           setIsActive(false);
-          setGameState({ ...gameState, flip1: "", flip2: "" });
         }, 900);
       }
     }

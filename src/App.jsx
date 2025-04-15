@@ -4,8 +4,9 @@ import AiPlayer from "./AiPlayer";
 import { ScoreBoard } from "./ScoreBoard";
 import SettingModal from "./SettingModal";
 import { GameBox } from "./GameBox";
-import DisplayGameOver from "./DisplayGameOver";
 import DisplayMatch from "./DisplayMatch";
+// import DisplayGameOver from "./DisplayGameOver";
+const DisplayGameOver = React.lazy(() => import("./DisplayGameOver"));
 
 export default function App() {
   const DEFAULT_GAME_SIZE = 9;
@@ -58,7 +59,6 @@ export default function App() {
   // initialize cardMap and weightMap arrays
   useEffect(() => {
     // Initialize the weightMap after images are fetched
-    console.log("initializing game part 2", img);
     if (!modalOpen && img && img.length > 0 && cardMap.length === 0) {
       mapCards(
         // mix up the images for variety, but skip if all are getting used
@@ -72,7 +72,6 @@ export default function App() {
 
   //check to see if it is an AI turn
   useEffect(() => {
-    console.log("checking for AI turn");
     let timeoutid;
     if (cardMap.length > 0) {
       // Ensure cardMap array is fully loaded
@@ -157,17 +156,12 @@ export default function App() {
           setIsModalOpen={setIsModalOpen}
         />
       )}
-      {gameState.matchState &&
-        !modalOpen &&
-        !checkGameOver() &&
-        (console.log(gameState.flip1, gameState.flip2, checkGameOver()) || (
-          <DisplayMatch
-            scoreData={scoreData}
-            endAnimation={() =>
-              setGameState({ ...gameState, matchState: false })
-            }
-          />
-        ))}
+      {gameState.matchState && !modalOpen && !checkGameOver() && (
+        <DisplayMatch
+          scoreData={scoreData}
+          endAnimation={() => setGameState({ ...gameState, matchState: false })}
+        />
+      )}
       <GameBox
         cardMap={cardMap}
         scoreData={scoreData}

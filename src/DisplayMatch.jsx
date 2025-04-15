@@ -1,5 +1,5 @@
 import React from "react";
-import "./message.css";
+import "./styles/message.css";
 
 export default function DisplayMatch({ scoreData, endAnimation }) {
   const sizeReference =

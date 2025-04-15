@@ -4,6 +4,7 @@ import humanFace from "./assets/face-savoring-food-svgrepo-com.svg";
 import returnSVG from "./assets/previous-return-svgrepo-com.svg";
 import { PawSVG } from "./pawSVG";
 import { CardSizer } from "./CardSizer";
+import "./styles/settings.css";
 
 export default function SettingModal({
   setIsModalOpen,

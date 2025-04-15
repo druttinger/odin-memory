@@ -15,10 +15,8 @@ var requestOptions = {
 };
 
 const fetchImages = async (setImg, size) => {
-  console.log("this is getting called");
   const res = await fetch(imageUrl + size, requestOptions);
   const resData = await res.json();
-  console.log("resData", resData);
   setImg(resData);
 };
 
@@ -51,7 +49,6 @@ const shuffleArray = (array, size = 9) => {
     shuffledArray.push(tempArray[randomIndex]);
     tempArray.splice(randomIndex, 1);
   }
-  // console.log("shuffledArray", shuffledArray);
   return shuffledArray;
 };
 
