@@ -74,6 +74,10 @@
   color: blue;
 }
 
+.gameMessage > .draw {
+  color: rgb(196, 0, 196);
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;

@@ -14,22 +14,29 @@ export default function DisplayGameOver({
     window.innerWidth > window.innerHeight
       ? window.innerWidth
       : window.innerHeight;
-  const player1Wins = scoreData.player1 > scoreData.player2;
+  const winner =
+    scoreData.player1 === scoreData.player2
+      ? 0
+      : scoreData.player1 > scoreData.player2
+      ? 1
+      : 2;
+  const winnerText = ["Draw!", "Player 1 Wins!", "Player 2 Wins!"];
+  const winnerClass = ["draw", "player1", "player2"];
 
   return (
     <>
       <div className="gameMessage">
         <div
-          className={player1Wins ? "player1" : "player2"}
+          className={winnerClass[winner]}
           style={{ fontSize: sizeReference / 10 }}
         >
           Game Over!
         </div>
         <div
-          className={player1Wins ? "player1" : "player2"}
+          className={winnerClass[winner]}
           style={{ fontSize: sizeReference / 20 }}
         >
-          {player1Wins ? "Player 1 Wins!" : "Player 2 Wins!"}
+          {winnerText[winner]}
         </div>
         <div className="resetButtons" height={sizeReference / 3}>
           <img
